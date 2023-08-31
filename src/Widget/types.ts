@@ -11,3 +11,6 @@ export interface Containerable {
     zIndex: number
 }
 
+export type State = {
+    [key:string]:any
+}
