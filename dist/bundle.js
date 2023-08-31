@@ -26,20 +26,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Canvas)
 /* harmony export */ });
 class Canvas {
-    constructor(parent) {
+    constructor(parent, _components = []) {
         this.parent = parent;
+        this._components = _components;
         this.parent.innerHTML = '';
         this.parent.id = 'canvas';
         const newStyle = {
             display: 'grid',
             gridTemplateColumns: 'repeat(12, 1fr)',
-            gridTemplateRows: 'repeate(12, 1fr)',
+            gridTemplateRows: 'repeat(12, 1fr)',
             height: '100vh',
             columnGap: '5px',
             rowGap: '5px',
             aspectRatio: '1 / 1'
         };
         Object.assign(this.parent.style, newStyle);
+    }
+    get components() {
+        return this._components;
+    }
+    addComponents(component) {
+        this.components.push(component);
+        component.canvas = this;
+        this.render();
+    }
+    render() {
+        this.parent.innerHTML = '';
+        for (const component of this.components) {
+            // build the component
+            this.buildComponent(component);
+        }
+    }
+    buildComponent(component) {
+        let div = this.initializeComponentDiv(component);
+        this.buildContainerShape(component, div);
+        this.placeComponent(component, div);
+        this.parent.append(div);
+    }
+    initializeComponentDiv(component) {
+        const div = document.createElement('div');
+        div.id = component.id;
+        const newStyle = {
+            margin: 'auto',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignContent: 'center',
+            padding: '3%',
+            aspectRatio: '1 / 1'
+        };
+        Object.assign(div.style, newStyle);
+        return div;
+    }
+    buildContainerShape(component, div) {
+        Object.assign(div.style, component.shape.attributes);
+    }
+    placeComponent(component, div) {
+        const newStyle = {
+            gridColumnStart: component.locationLeft.toString(),
+            gridColumnEnd: "span " + component.width,
+            gridRowStart: component.locationTop.toString(),
+            gridRowEnd: "span " + component.height
+        };
+        Object.assign(div.style, newStyle);
     }
 }
 
@@ -435,6 +487,7 @@ const myComponent = new _Widget__WEBPACK_IMPORTED_MODULE_0__.Component();
 console.log(myComponent);
 console.log(myComponent.shape);
 console.log(myComponent.shape.attributes);
+canvas.addComponents(myComponent);
 
 })();
 

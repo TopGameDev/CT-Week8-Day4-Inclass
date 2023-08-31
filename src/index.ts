@@ -7,3 +7,5 @@ const myComponent = new Component();
 console.log(myComponent);
 console.log(myComponent.shape);
 console.log(myComponent.shape.attributes)
+
+canvas.addComponents(myComponent)
