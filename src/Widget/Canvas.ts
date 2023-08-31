@@ -16,6 +16,7 @@ export default class Canvas{
             columnGap: '5px',
             rowGap: '5px',
             aspectRatio: '1 / 1'
+            // margin: 'auto' full screen
         }
         Object.assign(this.parent.style, newStyle)
     }

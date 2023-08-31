@@ -1,7 +1,11 @@
 import Canvas from "./Canvas";
 import Component from "./Component";
+import {LeftLeaningContainer, RightLeaningContainer, CircleContainer} from './Containers'
 
 export {
     Canvas,
-    Component
+    Component,
+    LeftLeaningContainer,
+    RightLeaningContainer,
+    CircleContainer
 }
